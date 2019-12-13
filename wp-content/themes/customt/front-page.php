@@ -1,46 +1,31 @@
-<?php
+<?php get_header();  ?>
 
-get_header();
 
-if (have_posts()) :
-    while ( have_posts()) : the_post ();?>
+        <div class="container">
+            <div class="row">
+                <div class="col-2">
+                    <?php get_sidebar( 'front-page-left' ); ?>
+                </div>
+                <div class="col-6">
 
-        <div class="d-flex" id="wrapper">
+                    <?php if (have_posts()) :
+                    while ( have_posts()) : the_post ();
+                        the_title();
+                        the_content();
+                        the_tags();
 
-        <!-- Sidebar -->
-        <div class="bg-light border-right" id="sidebar-wrapper">
-            <div class="sidebar-heading">LSide </div>
-            <div class="list-group list-group-flush">
-                <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-                <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+                    ?>
+                </div>
+                <div class="col-3">
+                    <?php get_sidebar( 'front-page-right' ); ?>
+                </div>
             </div>
         </div>
-        <!-- /#sidebar-wrapper -->
 
 
 
-        <div id="page-content-wrapper">
-            <?php the_title();?>
-            <?php the_content();?>
-        </div>
-        <!--<img src="https://scx1.b-cdn.net/csz/news/800/2019/nasamoonrock.jpg"> -->
 
-            <!-- Sidebar -->
-            <div class="bg-light border-right" id="sidebar-wrapper">
-                <br><div class="sidebar-heading">RSide </div>
-                blah blah blah blah <br>
-                blah blah blah blah <br>
-                blah blah blah blah <br>
-                blah blah blah blah <br>
-                blah blah blah blah <br>
-            </div>
-            <!-- /#sidebar-wrapper -->
 
-        </div>
         <?php
       //  next_post_link();// – a link to the post published chronologically after the current post
       //  previous_post_link();// – a link to the post published chronologically before the current post
