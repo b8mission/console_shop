@@ -80,9 +80,11 @@ function register_post_types() {
 
 }
 
-require 'classes/My_Metabox.php';
-$mtbx = new My_Metabox('release-year','Release Year');
+require 'classes/Release_Year_Metabox.php';
+require 'classes/Generation_Metabox.php';
 
+$mtbx = new Release_Year_Metabox('release-year','Release Year');
+new Generation_Metabox('generation', 'GEN');
 
 /*
 //Include scripts and styles to head section

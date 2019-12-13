@@ -23,6 +23,14 @@
         echo 'Release Year :: ';
         echo get_post_meta($post->ID, 'release_year', true);
 
+
+
+        //echo 'GEN :: ';
+        if (get_post_meta($post->ID, 'generation', true) ?? false)
+        echo '<br> GEN:: ' . get_post_meta($post->ID, 'generation', true);
+
+
+
         ?>
         </div>
       <!--  <div class="col-3">
