@@ -6,7 +6,7 @@
 /*
 !.htaccess
 !wp-content/
-
+!wp_db.sql
 # ignore everything in the "wp-content" directory, except:
 # "mu-plugins", "plugins", "themes" directory
 wp-content/*
@@ -25,5 +25,5 @@ node_modules/
 
 # ignore log files and databases
 *.log
-*.sql
+#*.sql
 *.sqlite

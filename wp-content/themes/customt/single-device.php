@@ -1,46 +1,40 @@
-<?php get_header();  ?>
+<?php get_header(); ?>
 
 
     <div class="container">
-    <div class="row">
-    <div class="col-2">
-        <?php get_sidebar( 'front-page-left' ); ?>
-    </div>
-    <div class="col-6">
+    <div class="row" style="text-align: center">
+    <div class="col-10" style="text-align: left">
 
 <?php if (have_posts()) :
-    while ( have_posts()) : the_post ();
+    while (have_posts()) : the_post(); ?>
 
-        echo 'DEVICE::';
-        the_title();
-        echo ';<hr>';
+        <!--html-->
+        <h4>// DEVICE :
+            <?php the_title(); ?>;
+        </h4>
+        <hr>
+
+        <?php
         the_content();
         the_tags();
 
-        echo 'Категория';
-        the_category();
 
-        echo 'Release Year :: ';
+
+        echo 'Release Year : ';
         echo get_post_meta($post->ID, 'release_year', true);
 
-
-
-        //echo 'GEN :: ';
         if (get_post_meta($post->ID, 'generation', true) ?? false)
-        echo '<br> GEN:: ' . get_post_meta($post->ID, 'generation', true);
-
-
-
+            echo '<br>Generation : ' . get_post_meta($post->ID, 'generation', true) . '<br><br>';
+            the_category();
         ?>
-        </div>
-      <!--  <div class="col-3">
-            <?php// get_sidebar( 'front-page-right' ); ?>
-        </div> -->
-        </div>
-        </div>
 
-
-
+        <!--html-->
+        </div>
+        <div class="col-2">
+            <?php get_sidebar('front-page-left'); ?>
+        </div>
+        </div>
+        </div>
 
 
     <?php

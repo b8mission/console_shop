@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <title><?php bloginfo( 'name' );?> </title>
     </head>
     <body>
     <?php wp_head();
@@ -9,7 +10,10 @@
 
     ?>
 
-    <h2>
-        UR at wp-student.ru
-    </h2>
+        <div style="text-align: center">
+            <h2>
+                <?php bloginfo( 'name' );?><!--Console Shop-->
+            </h2>
+        </div>
+
     <hr>
