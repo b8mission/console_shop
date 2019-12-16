@@ -16,17 +16,16 @@
 
         <?php
         the_content();
+
+        echo '<hr>';
         the_tags();
 
-
-
-        echo 'Release Year : ';
-        echo get_post_meta($post->ID, 'release_year', true);
-
-        if (get_post_meta($post->ID, 'generation', true) ?? false)
-            echo '<br>Generation : ' . get_post_meta($post->ID, 'generation', true) . '<br><br>';
-            the_category();
+        echo 'Vendor: ' . get_the_terms($post->ID,'vendor')[0]->name .'<br>';
+        echo 'Release Year : ' . get_post_meta($post->ID, 'release_year', true) . '<br>';
+        echo 'Generation : ' . get_post_meta($post->ID, 'generation', true) . '<br>';
+        the_category();
         ?>
+        <hr>
 
         <!--html-->
         </div>

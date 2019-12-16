@@ -21,6 +21,7 @@
                         //the_content();
                         the_excerpt();
                         the_tags();
+                        echo 'Vendor: ' . get_the_terms($post->ID,'vendor')[0]->name .'<br>';
                         the_category();
                         //  next_post_link();// – a link to the post published chronologically after the current post
                         //  previous_post_link();// – a link to the post published chronologically before the current post
