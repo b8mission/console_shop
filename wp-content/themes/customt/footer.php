@@ -1,6 +1,6 @@
 <hr>
 <h5 style="text-align: center">
-    2019 © Console Shop
+    <?php echo date("Y") . ' © '; bloginfo( 'name' );?>
 </h5>
 
 <?php
