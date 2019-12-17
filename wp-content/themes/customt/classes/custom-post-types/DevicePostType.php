@@ -16,7 +16,7 @@ class DevicePostType {
 				'show_in_menu'      => true,
 				'rest_base'         => null,
 				'menu_position'     => null,
-				'menu_icon'         => 'dashicons-video-alt',
+				'menu_icon'         => 'dashicons-welcome-view-site',
 				'hierarchical'      => false,
 				'supports'          => [
 					'title',
