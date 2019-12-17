@@ -1,8 +1,8 @@
 <?php
 
-require_once 'Base_Metabox.php';
+require_once 'BaseMetabox.php';
 
-class Generation_Metabox extends Base_Metabox {
+class GenerationMetabox extends Base_Metabox {
 	function render( $post ) {
 		$value = get_post_meta( $post->ID, 'generation', true );
 		?>

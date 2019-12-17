@@ -22,19 +22,23 @@ function add_theme_scripts() {
 		wp_enqueue_script( 'comment-reply' );
 	}
 }
+
 add_action( 'wp_enqueue_scripts', 'add_theme_scripts' );
 
 require 'classes/Sidebars.php';
 new Sidebars();
 
-require 'classes/custom-post-types/Device_Post_Type.php';
+require 'classes/custom-post-types/DevicePostType.php';
 new DevicePostType();
 
-require 'classes/Release_Year_Metabox.php';
-new Release_Year_Metabox( 'release-year', 'Release Year' );
+require 'classes/ReleaseYearMetabox.php';
+new ReleaseYearMetabox( 'release-year', 'Release Year' );
 
-require 'classes/Generation_Metabox.php';
-new Generation_Metabox( 'generation', 'GEN' );
+require 'classes/GenerationMetabox.php';
+new GenerationMetabox( 'generation', 'GEN' );
 
-require 'classes/Vendor_Taxonomy.php';
+require 'classes/VendorTaxonomy.php';
 new VendorTaxonomy();
+
+require 'classes/DevicesShortcode.php';
+new DeviceShortcode();

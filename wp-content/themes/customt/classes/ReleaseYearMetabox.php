@@ -1,8 +1,8 @@
 <?php
 
-require_once 'Base_Metabox.php';
+require_once 'BaseMetabox.php';
 
-class Release_Year_Metabox extends Base_Metabox {
+class ReleaseYearMetabox extends Base_Metabox {
 	function render( $post ) {
 		$value = get_post_meta( $post->ID, 'release_year', true );
 		?>
