@@ -42,3 +42,7 @@ new VendorTaxonomy();
 
 require 'classes/DevicesShortcode.php';
 new DeviceShortcode();
+
+require 'classes/tax-filter-wp-widget.php';
+new Filter_Widget();
+
