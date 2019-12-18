@@ -43,6 +43,8 @@ new VendorTaxonomy();
 require 'classes/DevicesShortcode.php';
 new DeviceShortcode();
 
-require 'classes/tax-filter-wp-widget.php';
+//tax-filter-widget
+require 'classes/tax-filter-wp-widget/tax-filter-wp-widget.php';
 new Filter_Widget();
-
+require_once 'classes/tax-filter-wp-widget/tax-filter-ajax.php';
+new TaxFilterAjax();

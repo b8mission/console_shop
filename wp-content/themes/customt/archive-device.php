@@ -2,30 +2,39 @@
     <div class="container">
         <div class="row">
             <div class="col-2">
-				<?php get_sidebar( 'front-page-left' ); ?>
+                <div class="row-fluid">
+				    <div>
+					    <?php get_sidebar('archive-left'); ?>
+                    </div>
+                    <br>
+                    <div>
+	                    <?php get_sidebar( 'front-page-left' ); ?>
+                    </div>
+                </div>
             </div>
             <div class="col-6">
 
                 <h3>Devices Page</h3>
+                    <div  id="devices">
+                    <?php if ( have_posts() ) :
+                        while ( have_posts() ) : the_post();
+                            ?>
 
-				<?php if ( have_posts() ) :
-					while ( have_posts() ) : the_post();
-						?>
-
-                        <hr>
-                        <hr>
-                        <a href="<?= get_permalink(); ?>">
-							<?php the_title(); ?>
-                        </a>
-						<?php
-						//the_content();
-						the_excerpt();
-						the_tags();
-						echo 'Vendor: ' . get_the_terms( $post->ID, 'vendor' )[0]->name . '<br>';
-						the_category();
-					endwhile;
-				endif;
-				?>
+                            <hr>
+                            <hr>
+                            <a href="<?= get_permalink(); ?>">
+                                <?php the_title(); ?>
+                            </a>
+                            <?php
+                            //the_content();
+                            the_excerpt();
+                            the_tags();
+                            echo 'Vendor: ' . get_the_terms( $post->ID, 'vendor' )[0]->name . '<br>';
+                            the_category();
+                        endwhile;
+                    endif;
+                    ?>
+                </div><!--id=devices-->
             </div>
         </div>
     </div>

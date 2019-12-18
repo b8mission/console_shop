@@ -19,6 +19,13 @@ class Sidebars {
 					'name' => __( 'Front Page Right Sidebar' )
 				)
 			);
+
+			register_sidebar(
+				array(
+					'id'   => 'archive-left',
+					'name' => __( 'Archive left sidebar' )
+				)
+			);
 		}
 
 	}
