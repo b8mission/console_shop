@@ -28,8 +28,15 @@ add_action( 'wp_enqueue_scripts', 'add_theme_scripts' );
 require 'classes/Sidebars.php';
 new Sidebars();
 
-require 'classes/custom-post-types/DevicePostType.php';
-new DevicePostType();
+//require 'classes/custom-post-types/DevicePostType.php';
+//new DevicePostType();
+
+
+//require 'classes/custom-post-types/MyPostTypes.php';
+//new MyPostTypes();
+
+require 'classes/custom-post-types/CustomPostType.php';
+CustomPostType::MakeAllPostTypes();
 
 require 'classes/ReleaseYearMetabox.php';
 new ReleaseYearMetabox( 'release-year', 'Release Year' );
@@ -48,3 +55,12 @@ require 'classes/tax-filter-wp-widget/tax-filter-wp-widget.php';
 new Filter_Widget();
 require_once 'classes/tax-filter-wp-widget/tax-filter-ajax.php';
 new TaxFilterAjax();
+
+require 'classes/RestRoute.php';
+new RestRoute();
+
+/*<- undone stuff =========================================
+if (get_page_template() == 'registration') {
+	wp_enqueue_script( 'register-script', get_template_directory_uri() . '/register.js' );
+	wp_localize_script( 'register-script', 'url', 'http://wp-student.ru/wp-json/customt/registration' );
+}
