@@ -1,15 +1,15 @@
 <?php
 
-class Filter_Widget extends WP_Widget {
+class FavoriteDevicesWidget extends WP_Widget {
 
 	public function __construct() {
 		parent::__construct(
-			'tax-filter-wp-widget',  // Base ID
-			'Taxonomy Filter WP Widget'   // Name
+			'favorite-devices-widget',  // Base ID
+			'Favorite Devices Widget'   // Name
 		);
 
 		add_action( 'widgets_init', function () {
-			register_widget( 'Filter_Widget' );
+			register_widget( 'FavoriteDevicesWidget' );
 		} );
 	}
 
@@ -20,24 +20,32 @@ class Filter_Widget extends WP_Widget {
 			return;
 		} //exit if disabled
 
-		$cats = $terms = get_terms( [
-			'taxonomy'   => 'vendor',
-			'hide_empty' => false,
-		] );
 
-		$title = ( ( $instance['title'] ) ?? 'Vendor' );
+		$title = ( ( $instance['title'] ) ?? '' );
 		echo $title, '<br>';
 
-		foreach ( $cats as $cat ) {
-			echo "<div>
-					<label>
-						<input name='vendorBox' class='vendorBox' type='checkbox' onchange='handleChange(this);' value='{$cat->name}'>{$cat->name}
-					</label>
-				</div>";
-		}
 
+		$id = get_the_ID();
+		$usr = wp_get_current_user();
+		$isFavorite = false;
+		if (in_array($id,get_user_meta( $usr->ID, 'favorite-devices-widget', false )))
+			$isFavorite = true;
+
+		?>
+        <div>
+            <form id="favorite_devices_widget_form" method="get">
+				<?php// wp_nonce_field(); ?>
+                <label>
+                    <input name='action' type='checkbox' <?php if ($isFavorite) echo 'checked';?> value='add'>
+	                <input type="hidden" name="user_id" value="<?=wp_get_current_user()->ID;?>">
+	                <input type="hidden" name="device_id" value="<?=get_the_ID();?>">
+                    Favourite
+	                <br><input type="submit">
+                </label>
+            </form>
+        </div>
+		<?php
 	}
-
 
 
 	public function form( $instance ) {

@@ -13,6 +13,7 @@ class RestRoute {
 			'permission_callback' => [ $this, 'permission_callback' ],
 			'args'                => array(
 
+
 				'login' => array(
 					'default'           => null,
 					'required'          => true,
@@ -46,6 +47,16 @@ class RestRoute {
 					},
 				),
 
+				'agreement' => array(
+					'default'           => null,
+					'required'          => true,
+					'validate_callback' => function ($param, $request, $key) {
+						if ( ( $param ?? 'no') != 'yes')
+							return false;
+
+						return true;
+					}
+				)
 
 			),
 		) );
@@ -54,7 +65,6 @@ class RestRoute {
 
 
 	public function my_rest_api_func( WP_REST_Request $request ) {
-		$success = false;
 
 		$login = $request['login'];
 		$password = $request['password'];

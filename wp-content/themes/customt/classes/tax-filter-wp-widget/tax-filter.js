@@ -12,7 +12,7 @@ function handleChange(checkbox) {
         }
     }
     //alert (str);
-    vendors = vendors.join(';');
+    vendors = vendors.join(',');
     //  alert('sending: ' + count+ ', '+vendors);
     callAjax(count,vendors);
 }
