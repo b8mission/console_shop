@@ -6,42 +6,44 @@ class RestRoute {
 	}
 
 
-	public function registration (){
+	public function registration() {
 		register_rest_route( 'customt', '/registration', array(
-			'methods'             => 'POST',            // метод запроса: GET, POST ...
-			'callback'            => [$this,'my_rest_api_func'],  // функция обработки запроса. Должна вернуть ответ на запрос
-			'permission_callback' => [$this, 'permission_callback' ],  // функция проверки доступа к маршруту. Должна вернуть true/false
-			// описание передаваемых параметров
+			'methods'             => 'POST',
+			'callback'            => [ $this, 'my_rest_api_func' ],
+			'permission_callback' => [ $this, 'permission_callback' ],
 			'args'                => array(
 
 				'login' => array(
 					'default'           => null,
-					// значение параметра по умолчанию
 					'required'          => true,
-					// является ли параметр обязательным. Может быть только true
 					'validate_callback' => function ( $param, $request, $key ) {
-						if (strlen($param) < 3) return false;
+						if ( ! is_string( $param ) ) {
+							return false;
+						}
+
+						if ( strlen( $param ) < 3 ) {
+							return false;
+						}
+
 						return true;
 					},
-					// функция проверки значения параметра. Должна вернуть true/false
-			//		'sanitize_callback' => 'sanitize_callback',
-					// функция очистки значения параметра. Должна вернуть очищенное значение
 				),
-
 
 
 				'password' => array(
 					'default'           => null,
-					// значение параметра по умолчанию
 					'required'          => true,
-					// является ли параметр обязательным. Может быть только true
 					'validate_callback' => function ( $param, $request, $key ) {
-						if (strlen($param) < 5) return false;
+						if ( ! is_string( $param ) ) {
+							return false;
+						}
+
+						if ( strlen( $param ) < 5 ) {
+							return false;
+						}
+
 						return true;
 					},
-					// функция проверки значения параметра. Должна вернуть true/false
-					//		'sanitize_callback' => 'sanitize_callback',
-					// функция очистки значения параметра. Должна вернуть очищенное значение
 				),
 
 
@@ -51,19 +53,35 @@ class RestRoute {
 	}
 
 
-	public function my_rest_api_func(WP_REST_Request $request)
-	{
-		$complited = false;
+	public function my_rest_api_func( WP_REST_Request $request ) {
+		$success = false;
 
-		return new WP_REST_Response( true, 200 );
+		$login = $request['login'];
+		$password = $request['password'];
+
+		$data = array(
+			'user_pass'     => $password,
+			'user_login'    => $login,
+			'user_nickname' => $login
+		);
+
+		$result = wp_insert_user( $data );
+
+		if ( is_int( $result ) ) {
+			wp_signon( array( 'user_login' => $login, 'user_password' => $password, 'remember' => true) );
+
+			return new WP_REST_Response( true, 200 );
+		}
+
+		return new WP_Error( '500', 'Registration server Error' );
 	}
 
 	public function sanitize_callback() {
 
 	}
 
-	public function permission_callback()
-	{
+	public function permission_callback() {
+		if (is_user_logged_in()) return false;
 		return true;
 	}
 
