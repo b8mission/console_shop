@@ -13,18 +13,10 @@ class FavoriteAddRoute {
 			'permission_callback' => [ $this, 'permission_callback' ],
 			'args'                => array(
 
-
-				'user_id' => array(
-					'default'           => null,
-					'required'          => true,
-					'validate_callback' => [$this,'validate_id'],
-				),
-
-
 				'device_id' => array(
 					'default'           => null,
 					'required'          => true,
-					'validate_callback' => [$this,'validate_id'],
+					'validate_callback' => [ $this, 'validate_id' ],
 				),
 
 
@@ -32,7 +24,7 @@ class FavoriteAddRoute {
 					'default'           => 'rm',
 					'required'          => null,
 					'validate_callback' => null
-				)
+				),
 
 
 
@@ -42,40 +34,55 @@ class FavoriteAddRoute {
 	}
 
 
-	public function validate_id( $param, $request , $key ) {
-		$param = (int)$param;
+	public function validate_id( $param, $request, $key ) {
+		$param = (int) $param;
 
-		if (!is_int($param)) return false;
+		if ( ! is_int( $param ) ) {
+			return false;
+		}
 
-		if ($param < 0) return false;
+		if ( $param < 1 ) {
+			return false;
+		}
 
 		return true;
 	}
 
 	public function my_rest_api_func( WP_REST_Request $request ) {
 
-		$usr = wp_get_current_user();
 
-		if ($request['action'] === 'add')
-			$this->addFavBook($request);
-		else
-			return $this->rmFavBook($request);
+		if ( $request['action'] === 'add' ) {
+			$this->addFavBook( $request );
+		} else {
+			$this->rmFavBook( $request );
+		}
 
 
 		return new WP_REST_Response( true, 200 );
 
-		return new WP_Error( '500', 'Registration server Error' );
+		//return new WP_Error( '500', 'Server Error - Favorite Devices Route' );
 	}
 
 
-	private function addFavBook($request)
-	{
-		add_user_meta( $request['user_id'], 'favorite-devices-widget', $request['device_id'], false );
+	private function addFavBook( $request ) {
+
+		$userId = wp_get_current_user()->ID;
+
+		$metaArray = get_user_meta( $userId, 'favorite-devices-widget', false );
+
+		//escape duplicates
+		foreach ( $metaArray as $meta ) {
+			if ( $meta === $request['device_id'] ) {
+				return;
+			}
+		}
+
+		add_user_meta( $userId, 'favorite-devices-widget', $request['device_id'], false );
 	}
 
-	private function rmFavBook($request)
-	{
-		delete_user_meta( $request['user_id'], 'favorite-devices-widget', $request['device_id'], false );
+	private function rmFavBook( $request ) {
+		$userId = wp_get_current_user()->ID;
+		delete_user_meta( $userId, 'favorite-devices-widget', $request['device_id'] );
 	}
 
 
@@ -84,7 +91,6 @@ class FavoriteAddRoute {
 	}
 
 	public function permission_callback() {
-		return true;
 
 		if ( is_user_logged_in() ) {
 			return true;

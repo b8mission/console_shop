@@ -2,8 +2,8 @@
 
 class TaxFilterAjax {
 	public function __construct() {
-		add_action( 'wp_ajax_my_action', [ $this, 'tax_ajax_responce' ] );
-		add_action( 'wp_ajax_nopriv_my_action', [ $this, 'tax_ajax_responce' ] );
+		add_action( 'wp_ajax_my_action', [ $this, 'tax_ajax_response' ] );
+		add_action( 'wp_ajax_nopriv_my_action', [ $this, 'tax_ajax_response' ] );
 
 		//add js
 		wp_enqueue_script( 'tax-filter', get_template_directory_uri() . '/classes/tax-filter-wp-widget/tax-filter.js' );
@@ -31,8 +31,8 @@ class TaxFilterAjax {
 	}
 
 
-	//ajax responce action
-	public function tax_ajax_responce() {
+	//hook function
+	public function tax_ajax_response() {
 
 		$taxFilter = $this->makeVendorFilter();
 
