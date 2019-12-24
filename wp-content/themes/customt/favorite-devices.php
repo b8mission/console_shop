@@ -1,15 +1,16 @@
 <?php /* Template Name: Favorite_Devices */ ?>
 
 <?php
+//auth break
+if ( ! is_user_logged_in() ) {
+	wp_redirect('/reg');
+}
+
+
 get_header();
 ?>
     <h3 style="text-align: center">Your favorite devices</h3><hr>
 <?php
-
-//auth break
-if ( ! is_user_logged_in() ) {
-	wp_die( 'Only members allowed' );
-}
 
 //the loop
 while ( have_posts() ) : the_post();
@@ -29,6 +30,7 @@ foreach ( $metaArray as $meta ) {
 	printDevicePost( $fpost );
 }
 
+if (count($metaArray) < 1) echo 'Your favorite devices will be here.';
 
 function printDevicePost( $post1 ) {
 	global $post;

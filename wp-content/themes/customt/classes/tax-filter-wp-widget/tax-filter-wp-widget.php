@@ -29,7 +29,7 @@ class Filter_Widget extends WP_Widget {
 		echo $title, '<br>';
 
 		foreach ( $cats as $cat ) {
-			echo "<div>
+			echo "<div class='unselectable'>
 					<label>
 						<input name='vendorBox' class='vendorBox' type='checkbox' onchange='handleChange(this);' value='{$cat->name}'>{$cat->name}
 					</label>
@@ -37,7 +37,6 @@ class Filter_Widget extends WP_Widget {
 		}
 
 	}
-
 
 
 	public function form( $instance ) {

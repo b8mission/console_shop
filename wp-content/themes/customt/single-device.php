@@ -24,6 +24,7 @@ wp_localize_script( 'favorite-devices', 'wpApiSettings', array(
         <hr>
 
 		<?php
+        get_sidebar('single-device-inner');
 		the_content();
 
 		echo '<hr>';
