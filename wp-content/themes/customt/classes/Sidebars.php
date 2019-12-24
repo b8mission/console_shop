@@ -26,6 +26,14 @@ class Sidebars {
 					'name' => __( 'Archive left sidebar' )
 				)
 			);
+
+			register_sidebar(
+				array(
+					'id'   => 'single-device-inner',
+					'name' => __( 'Single Device Inner' )
+				)
+			);
+
 		}
 
 	}

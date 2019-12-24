@@ -1,5 +1,15 @@
 <?php get_header(); ?>
 
+<?php
+
+wp_enqueue_script( 'favorite-devices', get_template_directory_uri() . '/classes/favorite-devices-widget/FavoriteDevicesWidget.js', array( 'jquery' ), 1.1, true );
+wp_localize_script( 'favorite-devices', 'url', 'http://wp-student.ru/wp-json/customt/favorite_add_route' );
+wp_localize_script( 'favorite-devices', 'wpApiSettings', array(
+	'root'  => esc_url_raw( rest_url() ),
+	'nonce' => wp_create_nonce( 'wp_rest' ),
+) );
+
+?>
 
     <div class="container">
     <div class="row" style="text-align: center">
@@ -14,6 +24,7 @@
         <hr>
 
 		<?php
+        get_sidebar('single-device-inner');
 		the_content();
 
 		echo '<hr>';
