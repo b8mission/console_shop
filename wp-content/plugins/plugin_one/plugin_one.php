@@ -1,6 +1,11 @@
-<?php /** Plugin Name: Plugin_One*/
+<?php
+/**
+ * Plugin Name: Plugin_One
+ */
 
 
-require('classes/SettingsPage.php');
+require('classes/class-settings-page.php');
+new Settings_Page();
 
-new SettingsPage();
+require_once ('classes/class-shortcode.php');
+new Device_Shortcode();

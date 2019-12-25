@@ -1,6 +1,6 @@
 <?php
 
-class SettingsPage {
+class Settings_Page {
 	function __construct() {
 
 		add_action( 'admin_init', [ $this, 'plugin_one_settings_init' ] );
@@ -10,7 +10,6 @@ class SettingsPage {
 	}
 
 	function plugin_one_options_page() {
-		// add top level menu page
 		add_menu_page(
 			'Plugin_One Settings',
 			'P1 Settings',
@@ -55,9 +54,7 @@ class SettingsPage {
 	}
 
 	function plugin_one_section_developers_cb( $args ) {
-		?>
 
-		<?php
 	}
 
 	function plugin_one_options_page_html() {
