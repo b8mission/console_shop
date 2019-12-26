@@ -1,6 +1,6 @@
 <?php
 
-class Device_Shortcode {
+class Plugin_One_Shortcode {
 	private const CACHE_TITLE_PREFIX = 'plugin_one_record_id_';
 
 	function __construct() {
@@ -24,9 +24,9 @@ class Device_Shortcode {
 
 		$data = get_transient( self::CACHE_TITLE_PREFIX . $id );
 		if ( $data === false ) {
-			$data = $this->get_data_from_api( $id );
+			$data = $this->get_data_from_api( $id, $this->get_user_key() );
 
-			if ( $data !== false ) {
+			if ( $data !== false && is_array( $data ) ) {
 				set_transient( self::CACHE_TITLE_PREFIX . $id, $data, 7 * 60 * 60 * 24 );
 			}
 		}
@@ -34,15 +34,27 @@ class Device_Shortcode {
 		return $this->print_data( $data );
 	}
 
+	private function get_user_key() {
+		$option = get_option( 'plugin_one_options', false );
+		$option = ( $option['api_key'] ?? '' );
 
-	private function get_data_from_api( $id ) {
+		if ( empty( $option ) || strlen( $option ) < 5 ) {
+			$option = false;
+		}
+
+		return $option;
+	}
+
+	private function get_data_from_api( $id, $apikey ) {
+		if ( $apikey === false ) {
+			return false;
+		}
 		$id = (int) $id;
 
-		$url = 'https://api-v3.igdb.com/games';
-
+		$url  = 'https://api-v3.igdb.com/games';
 		$args = array(
 			'headers' => array(
-				'user-key' => '68af80ddc1c728531572c2927e6a6fd5',//<<== hardcode data WTF. Will remake it later
+				'user-key' => $apikey,
 				'Accept: application/json'
 			),
 			'body'    => 'fields url, name, rating; where platforms = {' . $id . '} & rating > 0; limit 10; sort rating desc;',
@@ -50,8 +62,6 @@ class Device_Shortcode {
 		);
 
 		$response = wp_remote_post( $url, $args );
-
-		// need excepts here <<=========================================
 
 		if ( is_wp_error( $response ) ) {
 			return false;
@@ -66,7 +76,7 @@ class Device_Shortcode {
 
 
 	private function print_data( $data ) {
-		if ( $data === false ) {
+		if ( ( $data === false ) || ( ! is_array( $data ) ) ) {
 			return '';
 		}
 
