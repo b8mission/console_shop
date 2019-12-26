@@ -3,15 +3,26 @@
 class Plugin_One_Shortcode {
 	private const CACHE_TITLE_PREFIX = 'plugin_one_record_id_';
 
+
+
 	function __construct() {
 		add_shortcode( 'plugin_one', [ $this, 'plugin_one_shortcode' ] );
 	}
+
+
+
+
+
 
 	public function plugin_one_shortcode( $atts ) {
 		$a = shortcode_atts( array( 'id' => 0 ), $atts );
 
 		return ( $this->get_top_ten( $atts['id'] ) );
 	}
+
+
+
+
 
 	public function get_top_ten( $id ) {
 		$id = (int) $id;
@@ -34,6 +45,11 @@ class Plugin_One_Shortcode {
 		return $this->print_data( $data );
 	}
 
+
+
+
+
+
 	private function get_user_key() {
 		$option = get_option( 'plugin_one_options', false );
 		$option = ( $option['api_key'] ?? '' );
@@ -44,6 +60,10 @@ class Plugin_One_Shortcode {
 
 		return $option;
 	}
+
+
+
+
 
 	private function get_data_from_api( $id, $apikey ) {
 		if ( $apikey === false ) {
@@ -73,6 +93,11 @@ class Plugin_One_Shortcode {
 
 		return json_decode( $response['body'], true );
 	}
+
+
+
+
+
 
 
 	private function print_data( $data ) {

@@ -29,8 +29,54 @@ class Settings_Page {
 		<?php
 	}
 
+	function sanitize($input)
+    {
+    	$key = $input['api_key'];
+
+		if ($this->check_user_key($key))
+		{
+			add_settings_error( 'plugin_one_messages', 'plugin_one_message', __( 'Key is ok', 'plugin_one' ), 'updated' );
+			return $input;
+		}
+
+	    add_settings_error( 'plugin_one_messages', 'plugin_one_message', __( 'Wrong api key', 'plugin_one' ), 'error' );
+
+
+        return array();
+    }
+
+	private function check_user_key( $apikey ) {
+		if ( $apikey === false ) {
+			return false;
+		}
+
+		$apikey = (string)$apikey;
+
+		$url  = 'https://api-v3.igdb.com/games';
+		$args = array(
+			'headers' => array(
+				'user-key' => $apikey,
+				'Accept: application/json'
+			),
+			'body'    => 'fields name; limit 1;',
+			'timeout' => '5',
+		);
+
+		$response = wp_remote_post( $url, $args );
+
+		if ( is_wp_error( $response ) ) {
+			return false;
+		}
+
+		if ( ( $response['response']['code'] ?? 400 ) != 200 ) {
+			return false;
+		}
+
+		return true;
+	}
+
 	function plugin_one_settings_init() {
-		register_setting( 'plugin_one', 'plugin_one_options' );
+		register_setting( 'plugin_one', 'plugin_one_options', array($this, 'sanitize') );
 
 		add_settings_section(
 			'plugin_one_section_developers',
