@@ -5,7 +5,7 @@ class Settings_Page {
 
 		add_action( 'admin_init', [ $this, 'plugin_one_settings_init' ] );
 
-		add_action( 'admin_menu', [$this,'plugin_one_options_page']);
+		add_action( 'admin_menu', [ $this, 'plugin_one_options_page' ] );
 
 	}
 
@@ -24,33 +24,37 @@ class Settings_Page {
 		$options = get_option( 'plugin_one_options' );
 		?>
 
-        <input value="<?= $options[ 'api_key'] ?? '' ?>" name='plugin_one_options[api_key]' type="text" placeholder="Your API Key . . ."><br>
+        <input value="<?= $options['api_key'] ?? '' ?>" name='plugin_one_options[api_key]' type="text"
+               placeholder="Your API Key . . ."><br>
 
 		<?php
 	}
 
-	function sanitize($input)
-    {
-    	$key = $input['api_key'];
+	function sanitize( $input ) {
+		$key = $input['api_key'];
 
-		if ($this->check_user_key($key))
-		{
+		if ( $this->check_user_key( $key ) ) {
 			add_settings_error( 'plugin_one_messages', 'plugin_one_message', __( 'Key is ok', 'plugin_one' ), 'updated' );
+
 			return $input;
 		}
 
-	    add_settings_error( 'plugin_one_messages', 'plugin_one_message', __( 'Wrong api key', 'plugin_one' ), 'error' );
+		$options          = ( get_option( 'plugin_one_options' ) ?? false );
+		$options          = ( $options['api_key'] ?? false );
+		$input['api_key'] = $options;
+
+		add_settings_error( 'plugin_one_messages', 'plugin_one_message', __( 'Wrong api key', 'plugin_one' ), 'error' );
 
 
-        return array();
-    }
+		return $input;
+	}
 
 	private function check_user_key( $apikey ) {
 		if ( $apikey === false ) {
 			return false;
 		}
 
-		$apikey = (string)$apikey;
+		$apikey = (string) $apikey;
 
 		$url  = 'https://api-v3.igdb.com/games';
 		$args = array(
@@ -76,7 +80,7 @@ class Settings_Page {
 	}
 
 	function plugin_one_settings_init() {
-		register_setting( 'plugin_one', 'plugin_one_options', array($this, 'sanitize') );
+		register_setting( 'plugin_one', 'plugin_one_options', array( $this, 'sanitize' ) );
 
 		add_settings_section(
 			'plugin_one_section_developers',
@@ -88,12 +92,12 @@ class Settings_Page {
 		add_settings_field(
 			'plugin_one_field_pill',
 			__( 'Api Key', 'plugin_one' ),
-			[$this,'plugin_one_field_pill_cb'],
+			[ $this, 'plugin_one_field_pill_cb' ],
 			'plugin_one',
 			'plugin_one_section_developers',
 			[
-				'label_for'         => 'plugin_one_field_pill',
-				'class'             => 'plugin_one_row',
+				'label_for'              => 'plugin_one_field_pill',
+				'class'                  => 'plugin_one_row',
 				'plugin_one_custom_data' => 'custom',
 			]
 		);

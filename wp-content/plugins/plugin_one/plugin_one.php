@@ -9,3 +9,5 @@ new Settings_Page();
 
 require_once ('classes/class-shortcode.php');
 new Plugin_One_Shortcode();
+
+

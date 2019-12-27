@@ -74,3 +74,43 @@ new FavoriteDevicesWidget();
 
 require 'classes/RestRoutes/FavoriteRoute.php';
 new FavoriteAddRoute();
+
+
+
+
+
+add_filter( 'query_vars', function( $vars ){
+	$vars[] = 'taxonomy';
+	return $vars;
+} );
+
+add_action('init', function() {
+
+	add_rewrite_rule(
+		'^device/vendor/([^/]+)/?$',
+		//'^device/([^/]+)/?$',
+		'index.php?post_type=device&taxonomy=$matches[1]',
+		'top'
+	);
+
+});
+
+
+
+add_action('parse_request', function() {
+
+	$a = '';
+
+	if (($_SERVER['REQUEST_URI']) !== '/secret') return;
+
+	if (!is_user_logged_in())
+	{
+		echo 'no access';
+		return;
+	}
+	include('secrets/secrets.html');
+
+	//echo 'access allowed <br>';
+	//echo 'my bank pincode is 5578';
+
+});
